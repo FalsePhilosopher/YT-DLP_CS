@@ -18,3 +18,5 @@ If `yt-dlp -U` for updating doesn't work or installing fresh.
 ```
 cd /tmp && wget https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux && mv yt-dlp_linux yt-dlp && chmod +x yt-dlp && sudo cp yt-dlp /bin && rm yt-dlp
 ```
+More useful commands  
+https://gist.github.com/DiegoFleitas/c940d4b94d6b92b55a7084afe84bf571
