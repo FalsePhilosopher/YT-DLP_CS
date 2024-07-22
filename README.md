@@ -1,17 +1,23 @@
 # YT-DLG Cheat Sheet
 
 ### Video+Audio
-Removes sponsored segments, grabs the highest quality 720p and 30(or 24FPS)FPS video/audio streams and merges them into a .mp4 file and grabs all the urls from a list called `urls.txt`.  
+Removes sponsored segments, grabs the highest quality 720p and 30(or 24FPS)FPS video/audio streams with it's metadata and merges it into a .mp4 file and grabs all the urls from a list called `urls.txt`.  
 ```
-yt-dlp --sponsorblock-remove all --embed-metadata -f 'bestvideo[height<=720][fps<=30]+bestaudio/best[height<=720][fps<=30]' --merge-output-format mp4 -o %(title)s.%(ext)s -a urls.txt
+yt-dlp --sponsorblock-remove all --embed-metadata -f 'bv[height<=720][fps<=30]+ba/b[height<=720][fps<=30]' --merge-output-format mp4 -o %(title)s.%(ext)s -a urls.txt
 ```
 ### Audio
 Downloads highest quality m4a audio track
 ```
 yt-dlp --embed-metadata -f 'ba[ext=m4a]' -o %(title)s.%(ext)s -a urls.txt
 ```
+Rip all songs in a mix individually  
+Note: The -o system variable isn't respected when splitting chapters and the `--output` is necessary. 
+```
+yt-dlp --embed-metadata --split-chapters -f 'ba[ext=m4a]' --output '%(title)s.%(ext)s' -a urls.txt
+```
 ## Notes
-`-o %(title)s.%(ext)s` can be removed from the variables by creating `/etc/yt-dlp.conf` with that config added to it.
+`-o %(title)s.%(ext)s` can be removed from the variables by creating `/etc/yt-dlp.conf` with that config added to it.  
+If you want subtitles add `--embed-subs`
 
 # Grab latest release
 If `yt-dlp -U` for updating doesn't work or installing fresh.
