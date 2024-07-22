@@ -3,7 +3,7 @@
 ### Video+Audio
 Removes sponsored segments, grabs the highest quality 720p 30FPS video/audio streams and merges them into a .mp4 file and grabs all the urls from a list called `urls.txt`.  
 ```
-yt-dlp --sponsorblock-remove default -f 'bestvideo[height<=720][fps=30]+bestaudio/best[height<=720][fps=30]' --merge-output-format mp4 -o %(title)s.%(ext)s -a urls.txt
+yt-dlp --sponsorblock-remove default -f 'bestvideo[height<=720][fps<=30]+bestaudio/best[height<=720][fps<=30]' --merge-output-format mp4 -o %(title)s.%(ext)s -a urls.txt
 ```
 ### Audio
 Downloads highest quality m4a audio track
