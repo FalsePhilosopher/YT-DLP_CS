@@ -1,8 +1,8 @@
 # YT-DLG Cheat Sheet
 
 ## Video
-Grabs all the URLs from a list called `urls.txt`, removes sponsored segments, grabs the highest quality 720p/30FPS or below video with it's metadata and embeds the subtitles.  
-**Note** The `--force-keyframes-at-cuts` option will have FFMPEG use the CPU by default, you will get artifacts at the cuts if you don't use that option. To enable hardware acceleration to the process run `ffmpeg -encoders` to see what HW based encoders are available on your system. From there add `--postprocessor-args '-c:v ENCODER'` and change `ENCODER` to your supported HW based encoder to the command or conf file. This will also only download the video and not the audio.
+Grabs all the URLs from a list called `urls.txt`, removes sponsored segments, grabs the highest quality 720p/30FPS or below video with it's metadata and embeds the subtitles. This will also only download the video and not the audio.  
+**Note** The `--force-keyframes-at-cuts` option will have FFMPEG use the CPU by default, you will get artifacts at the cuts if you don't use that option. To enable hardware acceleration to the process [RTFM](https://trac.ffmpeg.org/wiki/HWAccelIntro) on what is supported for your hardware/installing configs, then run `ffmpeg -encoders` to see what HW based encoders are available on your system. Add `--postprocessor-args '-c:v ENCODER'` and change `ENCODER` to your supported HW based encoder to the command or conf file.
 ```
 yt-dlp --sponsorblock-remove all --embed-metadata --embed-subs --sub-langs 'en.*' --force-keyframes-at-cuts -f 'mp4[height<=720][fps<=30]' -o '%(title)s.%(ext)s' -a urls.txt
 ```
@@ -33,6 +33,7 @@ To download the subtitles instead of embed them use `--write-sub` for auto gener
 ## RTFM  
 https://man.archlinux.org/man/extra/yt-dlp/yt-dlp.1.en  
 https://github.com/yt-dlp/yt-dlp/wiki
+https://trac.ffmpeg.org/wiki/HWAccelIntro
 
 ### Some useful commands  
 https://gist.github.com/DiegoFleitas/c940d4b94d6b92b55a7084afe84bf571
