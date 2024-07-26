@@ -3,12 +3,12 @@
 ## Video
 Grabs all the urls from a list called `urls.txt`, removes sponsored segments, grabs the highest quality 720p and 30(or 24FPS)FPS video with it's metadata and embeds the subtitles. 
 ```
-yt-dlp --sponsorblock-remove all --embed-metadata --embed-subs --sub-langs 'en-orig' --force-keyframes-at-cuts -f 'bv[height<=720][fps<=30][ext=mp4]' -o '%(title)s.%(ext)s' -a urls.txt
+yt-dlp --sponsorblock-remove all --embed-metadata --embed-subs --sub-langs 'en' --force-keyframes-at-cuts -f 'bv[height<=720][fps<=30][ext=mp4]' -o '%(title)s.%(ext)s' -a urls.txt
 ```
 ### Seperate Video+Audio streams merged
 For videos with multiple language audio tracks to pick from.
 ```
-yt-dlp --sponsorblock-remove all --embed-metadata --embed-subs --sub-langs 'en-orig' --force-keyframes-at-cuts -f 'bv[height<=720][fps<=30]+ba/b[height<=720][fps<=30]' --merge-output-format mp4 -o %(title)s.%(ext)s -a urls.txt
+yt-dlp --sponsorblock-remove all --embed-metadata --embed-subs --sub-langs 'en' --force-keyframes-at-cuts -f 'bv[height<=720][fps<=30]+ba/b[height<=720][fps<=30]' --merge-output-format mp4 -o %(title)s.%(ext)s -a urls.txt
 ```
 ## Audio
 Downloads highest quality m4a audio track
