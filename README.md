@@ -4,7 +4,7 @@
 Grabs all the URLs from a list called `urls.txt`, removes sponsored segments, grabs the highest quality 720p/30FPS or below video with it's metadata and embeds the subtitles.  
 **Note** The `--force-keyframes-at-cuts` option will have FFMPEG use the CPU by default, you will get artifacts at the cuts if you don't use that option. To enable hardware acceleration to the process run `ffmpeg -encoders` to see what HW based encoders are available on your system. From there add `--postprocessor-args '-c:v ENCODER'` and change `ENCODER` to your supported HW based encoder to the command or conf file.
 ```
-yt-dlp --sponsorblock-remove all --embed-metadata --embed-subs --sub-langs 'en' --force-keyframes-at-cuts -f 'mp4[height<=720][fps<=30]' -o '%(title)s.%(ext)s' -a urls.txt
+yt-dlp --sponsorblock-remove all --embed-metadata --embed-subs --sub-langs 'en.*' --force-keyframes-at-cuts -f 'mp4[height<=720][fps<=30]' -o '%(title)s.%(ext)s' -a urls.txt
 ```
 ### Separate Video+Audio streams merged
 For videos with multiple language audio tracks to pick from.
@@ -27,7 +27,8 @@ cd /tmp && wget https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp
 ```
 ## Notes
 Variables like `-o '%(title)s.%(ext)s'` can be removed from the command by creating `/etc/yt-dlp.conf` with that variable added to it.  
-Too long of file names `-o "%(title).200s.%(ext)s"` for 200 max char, or `--trim-filenames 200`.
+Too long of file names `-o "%(title).200s.%(ext)s"` for 200 max char, or `--trim-filenames 200`.  
+To download the subtitles instead of embed them use `--write-sub` for auto generated subtitles use `--write-auto-sub`, creator subtitles are picked over auto generated subtitles by default.
 
 ## RTFM  
 https://man.archlinux.org/man/extra/yt-dlp/yt-dlp.1.en  
