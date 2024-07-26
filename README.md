@@ -2,12 +2,12 @@
 
 ## Video
 Grabs all the URLs from a list called `urls.txt`, removes sponsored segments, grabs the highest quality 720p/30FPS or below video with it's metadata and embeds the subtitles.  
-**Note** The `--force-keyframes-at-cuts` option will have FFMPEG use the CPU by default, you will get artifacts at the cuts if you don't use that option. To enable hardware acceleration to the process run `ffmpeg -encoders` to see what HW based encoders are available on your system. From there add `--postprocessor-args '-c:v ENCODER'` and change `ENCODER` to your supported HW based encoder to the command or conf file.
+**Note** The `--force-keyframes-at-cuts` option will have FFMPEG use the CPU by default, you will get artifacts at the cuts if you don't use that option. To enable hardware acceleration to the process run `ffmpeg -encoders` to see what HW based encoders are available on your system. From there add `--postprocessor-args '-c:v ENCODER'` and change `ENCODER` to your supported HW based encoder to the command or conf file. This will also only download the video and not the audio.
 ```
 yt-dlp --sponsorblock-remove all --embed-metadata --embed-subs --sub-langs 'en.*' --force-keyframes-at-cuts -f 'mp4[height<=720][fps<=30]' -o '%(title)s.%(ext)s' -a urls.txt
 ```
 ### Separate Video+Audio streams merged
-For videos with multiple language audio tracks to pick from.
+Userful for videos with multiple language audio tracks to pick from.
 ```
 yt-dlp --sponsorblock-remove all --embed-metadata --embed-subs --sub-langs 'en' --force-keyframes-at-cuts -f 'bv[height<=720][fps<=30]+ba/b[height<=720][fps<=30]' --merge-output-format mp4 -o %(title)s.%(ext)s -a urls.txt
 ```
