@@ -29,7 +29,8 @@ cd /tmp && wget https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp
 Variables like `-o '%(title)s.%(ext)s'` can be removed from the command by creating `/etc/yt-dlp.conf` with that variable added to it.  
 Too long of file names `-o "%(title).200s.%(ext)s"` for 200 max char, or `--trim-filenames 200`.  
 Creator subtitles are picked over auto generated subtitles by default when using `--write-auto-sub`  
-To ensure you get all english subtitles you can use `--sub-langs 'en.*'` to grab both the creator/auto subs.
+To ensure you get all english subtitles you can use `--sub-langs 'en.*'` to grab both the creator/auto subs.  
+You will get faster download speeds using aria2c instead of the default `--downloader aria2c`  
 
 ## RTFM  
 https://man.archlinux.org/man/extra/yt-dlp/yt-dlp.1.en  
