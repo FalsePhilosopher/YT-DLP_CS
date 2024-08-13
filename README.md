@@ -33,8 +33,7 @@ To ensure you get all english subtitles you can use `--sub-langs 'en.*'` to grab
 
 ## RTFM  
 https://man.archlinux.org/man/extra/yt-dlp/yt-dlp.1.en  
-https://github.com/yt-dlp/yt-dlp/wiki
-https://trac.ffmpeg.org/wiki/HWAccelIntro
-
+https://github.com/yt-dlp/yt-dlp/wiki  
+https://trac.ffmpeg.org/wiki/HWAccelIntro  
 ### Some useful commands  
 https://gist.github.com/DiegoFleitas/c940d4b94d6b92b55a7084afe84bf571
