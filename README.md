@@ -1,4 +1,4 @@
-# YT-DLG Cheat Sheet
+# YT-DLP Cheat Sheet
 
 ## Video
 Grabs all the URLs from a list called `urls.txt`, removes sponsored segments, grabs the highest quality 720p/30FPS or below video with it's metadata and embeds the subtitles. This will also only download the video and not the audio.  
