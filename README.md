@@ -31,6 +31,7 @@ Too long of file names `-o "%(title).200s.%(ext)s"` for 200 max char, or `--trim
 Creator subtitles are picked over auto generated subtitles by default when using `--write-auto-sub`  
 To ensure you get all english subtitles you can use `--sub-langs 'en.*'` to grab both the creator/auto subs.  
 You will get faster download speeds using aria2c instead of the default `--downloader aria2c`  
+On a mobile device with a TPU it's 3X more efficent to use opencl over mediacodec/GPU for your hwaccel.
 
 ## RTFM  
 https://man.archlinux.org/man/extra/yt-dlp/yt-dlp.1.en  
