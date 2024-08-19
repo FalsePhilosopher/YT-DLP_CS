@@ -2,7 +2,7 @@
 
 ## Video Only
 Grabs all the URLs from a list called `urls.txt`, removes sponsored segments, grabs the highest quality 720p/30FPS or below video with it's metadata and embeds the subtitles.  
-**Note** If using the `--sponsorblock-remove` arg you will need to use the `--force-keyframes-at-cuts` arg or you will get artifacts at the cuts if you don't use that option. By default ffmpeg will use the CPU, to enable HWaccel encoding for ffmpeg during the modifychapters part of the process if using the `--sponsorblock-remove` option [RTFM](https://trac.ffmpeg.org/wiki/HWAccelIntro) on what is supported for your hardware/installing configs, then run `ffmpeg -encoders >> ffmpeg-encode.txt` and `ffmpeg -hwaccels >> ffmpeg-encode.txt` to see what HWaccels/encoders are available on your system. Then add `--ppa "ModifyChapters+ffmpeg_i:-hwaccel vaapi -hwaccel_output_format vaapi" --ppa "ModifyChapters+ffmpeg_o:-c:v hevc_vaapi"` to your args. Change `vaapi` to your supported HWaccel/encoder to the command or conf file. Embeding metadata and subtitles are seperate encode calls, so be sure to change the `sample+ffmpeg_i/o:` values for hwaccel for those steps as well.  
+**Note** If using the `--sponsorblock-remove` arg you will need to use the `--force-keyframes-at-cuts` arg or you will get artifacts at the cuts if you don't use that option. By default ffmpeg will use the CPU, to enable HWaccel encoding for ffmpeg during the modifychapters part of the process if using the `--sponsorblock-remove` option [RTFM](https://trac.ffmpeg.org/wiki/HWAccelIntro) on what is supported for your hardware/installing configs, then run `ffmpeg -encoders >> ffmpeg-encode.txt` and `ffmpeg -hwaccels >> ffmpeg-encode.txt` to see what HWaccels/encoders are available on your system. Then add `--ppa "ModifyChapters+ffmpeg_i:-hwaccel vaapi -hwaccel_output_format vaapi" --ppa "ModifyChapters+ffmpeg_o:-c:v hevc_vaapi -x265-params lossless=1"` to your args. Change `vaapi` to your supported HWaccel/encoder to the command or conf file. Embeding metadata and subtitles are seperate encode calls, so be sure to change the `sample+ffmpeg_i/o:` values for hwaccel for those steps as well.  
 ```
 yt-dlp --sponsorblock-remove default --sub-langs 'en' --write-auto-sub --embed-metadata --embed-subs --force-keyframes-at-cuts -f 'mp4[height<=720][fps<=30]' -o '%(title)s.%(ext)s' -a urls.txt
 ```
@@ -48,6 +48,15 @@ and add to your command
 ```
 --exec after_move:'/SAMPLE-PATH/scp.sh && rm %(filepath,_filename|)q'
 ```
+## Termux Widget Shortcut
+Create a shortcut script that pastes your clipboard into your urls.txt file and executes yt-dlp against your urls.txt file.
+
+1. Install Termux from [F-Droid](https://f-droid.org/en/packages/com.termux/) first(the playstore version is old and cursed, the devs themselves say stay away from it.), then Termux Widget/API.
+2. Add the termux shortcut widget to your homescreen.
+3. In Termux install termux-api `pkg install termux-api`
+4. cd to `.shortcuts`
+5. Create `ytdl.sh` with `touch ytdl.sh` containing the contents `cd SAMPLE-PATH/ && termux-clipboard-get > urls.txt && yt-dlp -a urls.txt` with `echo "content" > ytdl.sh`.
+6. You can now copy a video url from your web browser and select `ytdl.sh` in your termux shortcut widget on the homescreen to auto rip that video.
 
 ---
 
