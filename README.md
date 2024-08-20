@@ -9,7 +9,7 @@ yt-dlp --sponsorblock-remove default --sub-langs 'en' --write-auto-sub --embed-m
 ### Video+Audio streams merged
 The most commonly run command, the one you probably want.
 ```
-yt-dlp --sponsorblock-remove all --sub-langs 'en' --write-auto-sub --embed-metadata --embed-subs --force-keyframes-at-cuts -f 'bv[height<=720][fps<=30]+ba/b[height<=720][fps<=30]' --merge-output-format mp4 -o %(title)s.%(ext)s -a urls.txt
+yt-dlp --sponsorblock-remove default --sub-langs 'en' --write-auto-sub --embed-metadata --embed-subs --force-keyframes-at-cuts -f 'bv[height<=720][fps<=30]+ba/b[height<=720][fps<=30]' --merge-output-format mp4 -o %(title)s.%(ext)s -a urls.txt
 ```
 ## Stream to Video Player
 Streams the video to VLC or MPV
@@ -79,17 +79,39 @@ pkg install ffmpeg                   # OPTIONAL: Install ffmpeg
 5. In Termux install termux-api `pkg install termux-api`
 6. cd to `.shortcuts`
 7. Create `ytdl.sh`(`touch ytdl.sh`) containing the contents below.(`pkg install nano && nano ytdl.sh` copy+paste contents below, `CTRL+x, Press Y, ENTER` to save.)  
+**Termux does not use shebangs, more info [here](https://wiki.termux.com/wiki/Differences_from_Linux)**  
 ```
 cd /data/data/com.termux/files/home/storage/movies/YT
 && termux-clipboard-get > urls.txt
-&& yt-dlp -a urls.txt -o %(title)s.%(ext)s --exec after_move:'termux-vibrate & termux-toast -g top "Video is Done!"
+&& yt-dlp -a urls.txt -f 'bv[height<=720][fps<=30]+ba/b[height<=720][fps<=30]' --merge-output-format mp4 -o %(title)s.%(ext)s --exec after_move:'termux-vibrate & termux-toast -g top "Video is Done!"
 ```
-**Termux does not use shebangs, more info [here](https://wiki.termux.com/wiki/Differences_from_Linux)**  
+**HWaccel Version** Make sure you follow the optional step for this to work.
+```
+cd /data/data/com.termux/files/home/storage/movies/YT
+&& termux-clipboard-get > urls.txt
+&& yt-dlp -a urls.txt -f 'bv[height<=720][fps<=30]+ba/b[height<=720][fps<=30]' --merge-output-format mp4 --sponsorblock-remove default --force-keyframes-at-cuts --ppa "ModifyChapters+ffmpeg_i:-hwaccel opencl -hwaccel_output_format opencl" --ppa "ModifyChapters+ffmpeg_o:-c:v hevc_mediacodec -level 6.2" -o %(title)s.%(ext)s --exec after_move:'termux-vibrate & termux-toast -g top "Video is Done!"
+```
+**HWaccel/Aria2c Version** Make sure you follow the optional step for this to work.
+```
+cd /data/data/com.termux/files/home/storage/movies/YT
+&& termux-clipboard-get > urls.txt
+&& yt-dlp -a urls.txt -f 'bv[height<=720][fps<=30]+ba/b[height<=720][fps<=30]' --merge-output-format mp4 --downloader aria2c --sponsorblock-remove default --force-keyframes-at-cuts --ppa "ModifyChapters+ffmpeg_i:-hwaccel opencl -hwaccel_output_format opencl" --ppa "ModifyChapters+ffmpeg_o:-c:v hevc_mediacodec -level 6.2" -o %(title)s.%(ext)s --exec after_move:'termux-vibrate & termux-toast -g top "Video is Done!"
+```
 8. cd to movies and create the YT dir/urls.txt
 ```
 cd /data/data/com.termux/files/home/storage/movies/ && mkdir YT && cd YT && touch urls.txt
 ```
 9. You can now copy a video URL from your web browser and select `ytdl.sh` in your termux shortcut widget on the homescreen.
+## Optional Steps
+10. Install OpenCL and enable HWaccel if using the `--sponsorblock-remove default` option.
+```
+pkg install opencl-vendor-driver
+pkg install opencl-headers
+pkg install ocl-icd
+pkg install clinfo
+```
+11. Run `clinfo` to confirm OpenCL works.
+12. Install aria2c for faster downloads `pkg install aria2c`
 
 ---
 
