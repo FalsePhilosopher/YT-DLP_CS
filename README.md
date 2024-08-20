@@ -2,7 +2,7 @@
 
 ## Video Only
 Grabs all the URLs from a list called `urls.txt`, removes sponsored segments, grabs the highest quality 720p/30FPS or below video with it's metadata and embeds the subtitles.  
-**Note** If using the `--sponsorblock-remove` arg you will need to use the `--force-keyframes-at-cuts` arg or you will get artifacts at the cuts if you don't use that option. By default ffmpeg will use the CPU, to enable HWaccel encoding for ffmpeg during the modifychapters part of the process if using the `--sponsorblock-remove` option [RTFM](https://trac.ffmpeg.org/wiki/HWAccelIntro) on what is supported for your hardware/installing configs, then run `ffmpeg -encoders >> ffmpeg-encode.txt` and `ffmpeg -hwaccels >> ffmpeg-encode.txt` to see what HWaccels/encoders are available on your system. Then add `--ppa "ModifyChapters+ffmpeg_i:-hwaccel vaapi -hwaccel_output_format vaapi" --ppa "ModifyChapters+ffmpeg_o:-c:v hevc_vaapi -x265-params lossless=1"` to your args. Change `vaapi` to your supported HWaccel/encoder to the command or conf file. Embeding metadata and subtitles are seperate encode calls, so be sure to change the `sample+ffmpeg_i/o:` values for hwaccel for those steps as well.  
+**Note** If using the `--sponsorblock-remove` arg you will need to use the `--force-keyframes-at-cuts` arg or you will get artifacts at the cuts if you don't use that option. By default ffmpeg will use the CPU, to enable HWaccel encoding for ffmpeg during the modifychapters part of the process if using the `--sponsorblock-remove` option [RTFM](https://trac.ffmpeg.org/wiki/HWAccelIntro) on what is supported for your hardware/installing configs, then run `ffmpeg -encoders >> ffmpeg-encode.txt` and `ffmpeg -hwaccels >> ffmpeg-encode.txt` to see what HWaccels/encoders are available on your system. Then add `--ppa "ModifyChapters+ffmpeg_i:-hwaccel vaapi -hwaccel_output_format vaapi" --ppa "ModifyChapters+ffmpeg_o:-c:v hevc_vaapi"` to your args. Change `vaapi` to your supported HWaccel/encoder to the command or conf file. Embeding metadata and subtitles are seperate encode calls, so be sure to change the `sample+ffmpeg_i/o:` values for hwaccel for those steps as well. On a mobile device with a TPU it's 3X more efficent to use opencl as your HWaccel and mediacodec/GPU for your encode. Mediacodec does not support lossless encoding, to see what profiles are supported for your supported encoders are run `ffmpeg -h encoder=hevc_vaapi >> ffmpeg-encode.txt`.  
 ```
 yt-dlp --sponsorblock-remove default --sub-langs 'en' --write-auto-sub --embed-metadata --embed-subs --force-keyframes-at-cuts -f 'mp4[height<=720][fps<=30]' -o '%(title)s.%(ext)s' -a urls.txt
 ```
@@ -33,8 +33,7 @@ Variables like `-o '%(title)s.%(ext)s'` can be removed from the command by creat
 Too long of file names `-o "%(title).200s.%(ext)s"` for 200 max char, or `--trim-filenames 200`.  
 Creator subtitles are picked over auto generated subtitles by default when using `--write-auto-sub`  
 To ensure you get all english subtitles you can use `--sub-langs 'en.*'` to grab both the creator/auto subs.  
-You will get faster download speeds using aria2c instead of the default `--downloader aria2c`  
-On a mobile device with a TPU it's 3X more efficent to use opencl as your HWaccel and mediacodec/GPU for your encode.
+You will get faster download speeds using aria2c instead of the default `--downloader aria2c`   
 
 ## SCP to NAS after encode
 Create a bash script named `scp.sh` containing  
