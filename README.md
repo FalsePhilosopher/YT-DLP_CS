@@ -66,7 +66,7 @@ and add to your command
 ## Termux Widget Shortcut
 The fastest way to rip videos on mobile is to create a termux shortcut script that pastes your clipboard into your urls.txt file and executes yt-dlp against your urls.txt file. It will place the video in the `movies/YT` folder for you to watch with VLC later. Once the video is done it will vibrate your device and push a toast notification that your video is done as a ease of life function. All you have to do is copy the URL from your web browser, hit the home function, tap the shortcut and enjoy at your convenience!
 
-1. Install Termux from [F-Droid](https://f-droid.org/en/packages/com.termux/) or [Github](https://github.com/termux/termux-app/releases/latest)(the playstore version is old and cursed, the devs themselves say stay away from it.), then install Termux Widget and Termux API.
+1. Install Termux from [F-Droid](https://f-droid.org/en/packages/com.termux/) or [Github](https://github.com/termux/termux-app/releases/latest)(the playstore version is old and cursed, the devs themselves say stay away from it.), then install Termux [Widget](https://f-droid.org/en/packages/com.termux.widget) and Termux [API](https://f-droid.org/en/packages/com.termux.api/).
 2. Add the termux shortcut widget to your homescreen.
 3. Setup storage [(wiki)](https://wiki.termux.com/wiki/Termux-setup-storage) and install yt-dlp [(wiki)](https://github.com/yt-dlp/yt-dlp/wiki/Installation#android)
 ```
