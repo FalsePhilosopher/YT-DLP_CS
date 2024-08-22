@@ -9,7 +9,7 @@ yt-dlp --sponsorblock-remove default --sub-langs 'en' --write-auto-sub --embed-m
 ### Video+Audio streams merged
 The most commonly run command, the one you probably want.
 ```
-yt-dlp --sponsorblock-remove default --sub-langs 'en' --write-auto-sub --embed-metadata --embed-subs --force-keyframes-at-cuts -f 'bv[height<=720][fps<=30]+ba/b[height<=720][fps<=30]' --merge-output-format mp4 -o %(title)s.%(ext)s -a urls.txt
+yt-dlp --sponsorblock-remove default --sub-langs 'en' --write-auto-sub --embed-metadata --embed-subs --force-keyframes-at-cuts -f 'bv[height<=720][fps<=30]+ba/b[height<=720][fps<=30]' --merge-output-format mp4 -o '%(title)s.%(ext)s' -a urls.txt
 ```
 ## Stream to Video Player
 Streams the video to VLC or MPV
@@ -29,7 +29,7 @@ yt-dlp -o - URL | vlc -
 ## Audio
 Downloads highest quality m4a audio track
 ```
-yt-dlp --embed-metadata -f 'ba[ext=m4a]' -o %(title)s.%(ext)s -a urls.txt
+yt-dlp --embed-metadata -f 'ba[ext=m4a]' -o '%(title)s.%(ext)s' -a urls.txt
 ```
 ### Rip all songs in a mix individually  
 ```
@@ -110,9 +110,6 @@ pkg install opencl-vendor-driver opencl-headers ocl-icd clinfo
 
 ---
 
-## PO Tokens
-Proof of origin token info can be found [here](https://github.com/yt-dlp/yt-dlp/pull/10648) and [here](https://github.com/yt-dlp/yt-dlp-wiki/pull/40/files).
-
 ## Notes
 Variables like `-o '%(title)s.%(ext)s'` can be removed from the command by creating `/etc/yt-dlp.conf` with that variable added to it.  
 Too long of file names `-o "%(title).200s.%(ext)s"` for 200 max char, or `--trim-filenames 200`.  
@@ -120,6 +117,7 @@ Creator subtitles are picked over auto generated subtitles by default when using
 To ensure you get all english subtitles you can use `--sub-langs 'en.*'` to grab both the creator/auto subs.  
 You will get faster download speeds using aria2c instead of the default `--downloader aria2c`  
 yt-dlp doesn't need the full youtube URL, if it's `https://www.youtube.com/watch?v=EXAMPLE` you can pull it with `yt-dlp EXAMPLE`
+Proof of origin token info can be found [here](https://github.com/yt-dlp/yt-dlp/pull/10648) and [here](https://github.com/yt-dlp/yt-dlp-wiki/pull/40/files).
 
 ## RTFM  
 https://man.archlinux.org/man/extra/yt-dlp/yt-dlp.1.en  
