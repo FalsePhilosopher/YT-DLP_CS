@@ -63,55 +63,55 @@ and add to your command
 ```
 --exec after_move:'/SAMPLE-PATH/scp.sh && rm %(filepath,_filename|)q'
 ```
-## Termux Widget Shortcut
-The fastest way to rip videos on mobile is to create a termux shortcut script that pastes your clipboard into your urls.txt file and executes yt-dlp against your urls.txt file. It will place the video in the `movies/YT` folder for you to watch with VLC later. Once the video is done it will vibrate your device and push a toast notification that your video is done as a ease of life function. All you have to do is copy the URL from your web browser, hit the home function, tap the shortcut and enjoy at your convenience!
+## Termux yt-dlp Shortcut
+The fastest way to rip videos on mobile is to share a url from youtube(web browser, clipious, libretube, youtube app) to a termux-url-opener yt-dlp shortcut script. It will place the video in the `movies` folder for you to watch with VLC later. Once the video is done it will vibrate your device and push a toast/text to speech notification that your video is done as a ease of life. All you have to do is share the URL and tap Termux once this is setup.
 
-1. Install Termux from [F-Droid](https://f-droid.org/en/packages/com.termux/) or [Github](https://github.com/termux/termux-app/releases/latest)(the playstore version is old and cursed, the devs themselves say stay away from it.), then install Termux [Widget](https://f-droid.org/en/packages/com.termux.widget) and Termux [API](https://f-droid.org/en/packages/com.termux.api/).
-2. Add the termux shortcut widget to your homescreen.
-3. Setup storage [(wiki)](https://wiki.termux.com/wiki/Termux-setup-storage) and install yt-dlp [(wiki)](https://github.com/yt-dlp/yt-dlp/wiki/Installation#android)
+1. Install Termux from [F-Droid](https://f-droid.org/en/packages/com.termux/) or [Github](https://github.com/termux/termux-app/releases/latest)(the playstore version is old and cursed, the devs themselves say stay away from it.) and Termux [API](https://f-droid.org/en/packages/com.termux.api/).
+2. Open Termux and setup storage [(wiki)](https://wiki.termux.com/wiki/Termux-setup-storage) an install yt-dlp/script dependancies. [(wiki)](https://github.com/yt-dlp/yt-dlp/wiki/Installation#android)
 ```
-termux-setup-storage                 # Allow termux to download files into your phone's storage
-pkg update && pkg upgrade            # Update all packages
-pkg install libexpat openssl python  # Install python
-pip install -U "yt-dlp[default]"     # Install yt-dlp with default dependencies
-pkg install ffmpeg                   # OPTIONAL: Install ffmpeg
+termux-setup-storage
+pkg update && pkg upgrade
+pkg install libexpat openssl python termux-api nano ffmpeg
+pip install -U "yt-dlp[default]"
 ```
-5. In Termux install termux-api `pkg install termux-api`
-6. cd to `.shortcuts`
-7. Create `ytdl.sh`(`touch ytdl.sh`) containing the contents below.(`pkg install nano && nano ytdl.sh` copy+paste contents below, `CTRL+x, Press Y, ENTER` to save.)  
+3. create the bin dir/termux-url-opener and open termux-url-opener for editing
+```
+mkdir bin && cd bin && touch termux-url-opener && nano termux-url-opener
+```
+4. Copy+paste the contents below and exit (`CTRL+x, Press Y, ENTER` to save and exit.)  
+```
+url=$1
+cd /data/data/com.termux/files/home/storage/movies/
+&& yt-dlp $1 -f 'bv[height<=720][fps<=30]+ba/b[height<=720][fps<=30]' --merge-output-format mp4 -o %(title)s.%(ext)s --exec after_move:'termux-vibrate & termux-tts-speak "video is done" & termux-toast -g top "Video is Done!"
+```
+
+---
+
+**HWaccel Version for Qualcomm SoC's** *Make sure you follow the optional step for this to work.*
+```
+url=$1
+cd /data/data/com.termux/files/home/storage/movies/
+&& yt-dlp $1 -f 'bv[height<=720][fps<=30]+ba/b[height<=720][fps<=30]' --merge-output-format mp4 --sponsorblock-remove default --force-keyframes-at-cuts --ppa "ModifyChapters+ffmpeg_i:-hwaccel opencl -hwaccel_output_format opencl" --ppa "ModifyChapters+ffmpeg_o:-c:v hevc_mediacodec -level 6.2" -o %(title)s.%(ext)s --exec after_move:'termux-vibrate & termux-tts-speak "video is done" & termux-toast -g top "Video is Done!"
+```
+**HWaccel/Aria2c Version** *Make sure you follow the optional step for this to work.*
+```
+url=$1
+cd /data/data/com.termux/files/home/storage/movies/
+&& yt-dlp url=$1 -f 'bv[height<=720][fps<=30]+ba/b[height<=720][fps<=30]' --merge-output-format mp4 --downloader aria2c --sponsorblock-remove default --force-keyframes-at-cuts --ppa "ModifyChapters+ffmpeg_i:-hwaccel opencl -hwaccel_output_format opencl" --ppa "ModifyChapters+ffmpeg_o:-c:v hevc_mediacodec -level 6.2" -o %(title)s.%(ext)s --exec after_move:'termux-vibrate & termux-tts-speak "video is done" & termux-toast -g top "Video is Done!"
+```
+
+---
+
 **Termux does not use shebangs, more info [here](https://wiki.termux.com/wiki/Differences_from_Linux)**  
-```
-cd /data/data/com.termux/files/home/storage/movies/YT
-&& termux-clipboard-get > urls.txt
-&& yt-dlp -a urls.txt -f 'bv[height<=720][fps<=30]+ba/b[height<=720][fps<=30]' --merge-output-format mp4 -o %(title)s.%(ext)s --exec after_move:'termux-vibrate & termux-toast -g top "Video is Done!"
-```
-**HWaccel Version** Make sure you follow the optional step for this to work.
-```
-cd /data/data/com.termux/files/home/storage/movies/YT
-&& termux-clipboard-get > urls.txt
-&& yt-dlp -a urls.txt -f 'bv[height<=720][fps<=30]+ba/b[height<=720][fps<=30]' --merge-output-format mp4 --sponsorblock-remove default --force-keyframes-at-cuts --ppa "ModifyChapters+ffmpeg_i:-hwaccel opencl -hwaccel_output_format opencl" --ppa "ModifyChapters+ffmpeg_o:-c:v hevc_mediacodec -level 6.2" -o %(title)s.%(ext)s --exec after_move:'termux-vibrate & termux-toast -g top "Video is Done!"
-```
-**HWaccel/Aria2c Version** Make sure you follow the optional step for this to work.
-```
-cd /data/data/com.termux/files/home/storage/movies/YT
-&& termux-clipboard-get > urls.txt
-&& yt-dlp -a urls.txt -f 'bv[height<=720][fps<=30]+ba/b[height<=720][fps<=30]' --merge-output-format mp4 --downloader aria2c --sponsorblock-remove default --force-keyframes-at-cuts --ppa "ModifyChapters+ffmpeg_i:-hwaccel opencl -hwaccel_output_format opencl" --ppa "ModifyChapters+ffmpeg_o:-c:v hevc_mediacodec -level 6.2" -o %(title)s.%(ext)s --exec after_move:'termux-vibrate & termux-toast -g top "Video is Done!"
-```
-8. cd to movies and create the YT dir/urls.txt
-```
-cd /data/data/com.termux/files/home/storage/movies/ && mkdir YT && cd YT && touch urls.txt
-```
-9. You can now copy a video URL from your web browser and select `ytdl.sh` in your termux shortcut widget on the homescreen.
+You can now share a video URL from your web browser, clipious, libretube, or youtube app and select termux for it to auto rip the video.  
 ## Optional Steps
-10. Install OpenCL and enable HWaccel if using the `--sponsorblock-remove default` option.
+5. Install OpenCL to enable HWaccel if using the `--sponsorblock-remove` option on Qualcomm SoC's.
 ```
-pkg install opencl-vendor-driver
-pkg install opencl-headers
-pkg install ocl-icd
-pkg install clinfo
+pkg install opencl-vendor-driver opencl-headers ocl-icd clinfo
 ```
-11. Run `clinfo` to confirm OpenCL works.
-12. Install aria2c for faster downloads `pkg install aria2c`
+6. Run `clinfo` to confirm OpenCL works.
+7. Install aria2c for faster downloads `pkg install aria2c`
+8. For more expanded termux-url-opener options follow [LordH3lmchen's gist](https://gist.github.com/LordH3lmchen/dc35e8df3dc41d126683f18fe44ebe17)
 
 ---
 
