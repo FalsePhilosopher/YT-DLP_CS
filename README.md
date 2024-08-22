@@ -43,14 +43,6 @@ cd /tmp && wget https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp
 
 ---
 
-## Notes
-Variables like `-o '%(title)s.%(ext)s'` can be removed from the command by creating `/etc/yt-dlp.conf` with that variable added to it.  
-Too long of file names `-o "%(title).200s.%(ext)s"` for 200 max char, or `--trim-filenames 200`.  
-Creator subtitles are picked over auto generated subtitles by default when using `--write-auto-sub`  
-To ensure you get all english subtitles you can use `--sub-langs 'en.*'` to grab both the creator/auto subs.  
-You will get faster download speeds using aria2c instead of the default `--downloader aria2c`  
-yt-dlp doesn't need the full youtube URL, if it's `https://www.youtube.com/watch?v=EXAMPLE` you can pull it with `yt-dlp EXAMPLE`  
-
 ## SCP to NAS after encode
 Create a bash script named `scp.sh` containing  
 ```
@@ -63,6 +55,9 @@ and add to your command
 ```
 --exec after_move:'/SAMPLE-PATH/scp.sh && rm %(filepath,_filename|)q'
 ```
+
+---
+
 ## Termux yt-dlp Shortcut
 The fastest way to rip videos on mobile is to share a url from youtube(web browser, clipious, libretube, youtube app) to a termux-url-opener yt-dlp shortcut script. It will place the video in the `movies` folder for you to watch with VLC later. Once the video is done it will vibrate your device and push a toast/text to speech notification that your video is done as a ease of life. All you have to do is share the URL and tap Termux once this is setup.
 
@@ -114,6 +109,17 @@ pkg install opencl-vendor-driver opencl-headers ocl-icd clinfo
 8. For more expanded termux-url-opener options follow [LordH3lmchen's gist](https://gist.github.com/LordH3lmchen/dc35e8df3dc41d126683f18fe44ebe17)
 
 ---
+
+## PO Tokens
+Proof of origin token info can be found [here](https://github.com/yt-dlp/yt-dlp/pull/10648) and [here](https://github.com/yt-dlp/yt-dlp-wiki/pull/40/files).
+
+## Notes
+Variables like `-o '%(title)s.%(ext)s'` can be removed from the command by creating `/etc/yt-dlp.conf` with that variable added to it.  
+Too long of file names `-o "%(title).200s.%(ext)s"` for 200 max char, or `--trim-filenames 200`.  
+Creator subtitles are picked over auto generated subtitles by default when using `--write-auto-sub`  
+To ensure you get all english subtitles you can use `--sub-langs 'en.*'` to grab both the creator/auto subs.  
+You will get faster download speeds using aria2c instead of the default `--downloader aria2c`  
+yt-dlp doesn't need the full youtube URL, if it's `https://www.youtube.com/watch?v=EXAMPLE` you can pull it with `yt-dlp EXAMPLE`
 
 ## RTFM  
 https://man.archlinux.org/man/extra/yt-dlp/yt-dlp.1.en  
