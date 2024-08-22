@@ -116,7 +116,7 @@ Too long of file names `-o "%(title).200s.%(ext)s"` for 200 max char, or `--trim
 Creator subtitles are picked over auto generated subtitles by default when using `--write-auto-sub`  
 To ensure you get all english subtitles you can use `--sub-langs 'en.*'` to grab both the creator/auto subs.  
 You will get faster download speeds using aria2c instead of the default `--downloader aria2c`  
-yt-dlp doesn't need the full youtube URL, if it's `https://www.youtube.com/watch?v=EXAMPLE` you can pull it with `yt-dlp EXAMPLE`
+yt-dlp doesn't need the full youtube URL, if it's `https://www.youtube.com/watch?v=EXAMPLE` you can pull it with `yt-dlp EXAMPLE`  
 Proof of origin token info can be found [here](https://github.com/yt-dlp/yt-dlp/pull/10648) and [here](https://github.com/yt-dlp/yt-dlp-wiki/pull/40/files).
 
 ## RTFM  
