@@ -62,21 +62,29 @@ and add to your command
 The fastest way to rip videos on mobile is to share a url from youtube(web browser, clipious, libretube, youtube app) to a termux-url-opener yt-dlp shortcut script. It will place the video in the `movies` folder for you to watch with VLC later. Once the video is done it will vibrate your device and push a toast/text to speech notification that your video is done as a ease of life. All you have to do is share the URL and tap Termux once this is setup.
 
 1. Install Termux from [F-Droid](https://f-droid.org/en/packages/com.termux/) or [Github](https://github.com/termux/termux-app/releases/latest)(the playstore version is old and cursed, the devs themselves say stay away from it.) and Termux [API](https://f-droid.org/en/packages/com.termux.api/).
-2. Open Termux and setup storage [(wiki)](https://wiki.termux.com/wiki/Termux-setup-storage) an install yt-dlp/script dependancies. [(wiki)](https://github.com/yt-dlp/yt-dlp/wiki/Installation#android)
+2. Open Termux and setup storage [(wiki)](https://wiki.termux.com/wiki/Termux-setup-storage) an install yt-dlp/script dependancies. [(wiki)](https://github.com/yt-dlp/yt-dlp/wiki/Installation#android)(copy and paste the contents below into termux and press enter)
 ```
 termux-setup-storage
 pkg update && pkg upgrade
 pkg install libexpat openssl python termux-api nano ffmpeg
 pip install -U "yt-dlp[default]"
 ```
+3. Now that you're set up copy and paste the contents below into termux and press enter.
+```
+mkdir bin && cd bin && wget https://raw.githubusercontent.com/FalsePhilosopher/YT-DLP_CS/main/termux-url-opener
+```
+That's it, you can now share a video URL from your web browser, clipious, libretube, or youtube app and select termux for it to auto rip the video.
+
+**Manual Install**  
 3. create the bin dir/termux-url-opener and open termux-url-opener for editing
 ```
 mkdir bin && cd bin && touch termux-url-opener && nano termux-url-opener
 ```
 4. Copy+paste the contents below and exit (`CTRL+x, Press Y, ENTER` to save and exit.)  
+**Termux does not use shebangs, more info [here](https://wiki.termux.com/wiki/Differences_from_Linux)**  
 ```
 url=$1
-cd /data/data/com.termux/files/home/storage/movies/
+cd /sdcard/Movies/
 && yt-dlp $1 -f 'bv[height<=720][fps<=30]+ba/b[height<=720][fps<=30]' --merge-output-format mp4 -o %(title)s.%(ext)s --exec after_move:'termux-vibrate & termux-tts-speak "video is done" & termux-toast -g top "Video is Done!"
 ```
 
@@ -85,19 +93,18 @@ cd /data/data/com.termux/files/home/storage/movies/
 **HWaccel Version for Qualcomm SoC's** *Make sure you follow the optional step for this to work.*
 ```
 url=$1
-cd /data/data/com.termux/files/home/storage/movies/
+cd /sdcard/Movies/
 && yt-dlp $1 -f 'bv[height<=720][fps<=30]+ba/b[height<=720][fps<=30]' --merge-output-format mp4 --sponsorblock-remove default --force-keyframes-at-cuts --ppa "ModifyChapters+ffmpeg_i:-hwaccel opencl -hwaccel_output_format opencl" --ppa "ModifyChapters+ffmpeg_o:-c:v hevc_mediacodec -level 6.2" -o %(title)s.%(ext)s --exec after_move:'termux-vibrate & termux-tts-speak "video is done" & termux-toast -g top "Video is Done!"
 ```
 **HWaccel/Aria2c Version** *Make sure you follow the optional step for this to work.*
 ```
 url=$1
-cd /data/data/com.termux/files/home/storage/movies/
+cd /sdcard/Movies/
 && yt-dlp url=$1 -f 'bv[height<=720][fps<=30]+ba/b[height<=720][fps<=30]' --merge-output-format mp4 --downloader aria2c --sponsorblock-remove default --force-keyframes-at-cuts --ppa "ModifyChapters+ffmpeg_i:-hwaccel opencl -hwaccel_output_format opencl" --ppa "ModifyChapters+ffmpeg_o:-c:v hevc_mediacodec -level 6.2" -o %(title)s.%(ext)s --exec after_move:'termux-vibrate & termux-tts-speak "video is done" & termux-toast -g top "Video is Done!"
 ```
 
 ---
 
-**Termux does not use shebangs, more info [here](https://wiki.termux.com/wiki/Differences_from_Linux)**  
 You can now share a video URL from your web browser, clipious, libretube, or youtube app and select termux for it to auto rip the video.  
 ## Optional Steps
 5. Install OpenCL to enable HWaccel if using the `--sponsorblock-remove` option on Qualcomm SoC's.
