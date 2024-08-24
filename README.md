@@ -124,7 +124,8 @@ Creator subtitles are picked over auto generated subtitles by default when using
 To ensure you get all english subtitles you can use `--sub-langs 'en.*'` to grab both the creator/auto subs.  
 You will get faster download speeds using aria2c instead of the default `--downloader aria2c`  
 yt-dlp doesn't need the full youtube URL, if it's `https://www.youtube.com/watch?v=EXAMPLE` you can pull it with `yt-dlp EXAMPLE`  
-Proof of origin token info can be found [here](https://github.com/yt-dlp/yt-dlp/pull/10648) and [here](https://github.com/yt-dlp/yt-dlp-wiki/pull/40/files).
+Proof of origin token info can be found [here](https://github.com/yt-dlp/yt-dlp/pull/10648) and [here](https://github.com/yt-dlp/yt-dlp-wiki/pull/40/files).  
+Changing your TTL to 65 might help with ripping on a mobile data connection ;) [Linux info here](https://askubuntu.com/questions/667096/how-to-change-the-default-ttl-of-tcp-ip-packets) [Windows info here](https://gist.github.com/farneser/3acdc050b59235e95c96802747b02113#file-windows-change-ttl-md)
 
 ## RTFM  
 https://man.archlinux.org/man/extra/yt-dlp/yt-dlp.1.en  
