@@ -59,29 +59,35 @@ and add to your command
 ---
 
 ## Termux yt-dlp Shortcut
-The fastest way to rip videos on mobile is to share a url from youtube(web browser, clipious, libretube, youtube app) to a termux-url-opener yt-dlp shortcut script. It will place the video in the `movies` folder for you to watch with VLC later. Once the video is done it will vibrate your device and push a toast/text to speech notification that your video is done as a ease of life. All you have to do is share the URL and tap Termux once this is setup.
+The fastest way to rip videos on mobile is to share a url from youtube(web browser, clipious, libretube, youtube app) to a termux-url-opener yt-dlp shortcut script. It will place the video in the `Movies` folder for you to watch with VLC later. Once the video is done it will vibrate your device and push a toast/text to speech notification that your video is done as a ease of life. All you have to do is share the URL and tap Termux once this is setup.
 
-1. Install Termux from [F-Droid](https://f-droid.org/en/packages/com.termux/) or [Github](https://github.com/termux/termux-app/releases/latest)(the playstore version is old and cursed, the devs themselves say stay away from it.) and Termux [API](https://f-droid.org/en/packages/com.termux.api/).
-2. Open Termux and setup storage [(wiki)](https://wiki.termux.com/wiki/Termux-setup-storage) an install yt-dlp/script dependancies. [(wiki)](https://github.com/yt-dlp/yt-dlp/wiki/Installation#android)(copy and paste the contents below into termux and press enter)
+1. Install [F-droid](https://f-droid.org/F-Droid.apk)
+2. Install [Termux](https://f-droid.org/en/packages/com.termux/) and Termux [API](https://f-droid.org/en/packages/com.termux.api/).
+3. Open Termux and setup storage/install script dependancies by copy/pasting the contents below into termux and pressing enter.
+```
+termux-setup-storage
+pkg update && pkg upgrade
+pkg install libexpat openssl python termux-api ffmpeg
+pip install -U "yt-dlp[default]"
+mkdir bin
+cd bin
+wget https://raw.githubusercontent.com/FalsePhilosopher/YT-DLP_CS/main/termux-url-opener
+```
+That's it, you can now share a video URL from your youtube app, web browser, clipious, or libretube and select termux for it to auto rip the video.
+
+**Manual Install**  
+3. Follow up to step 2 then open Termux to setup storage [(wiki)](https://wiki.termux.com/wiki/Termux-setup-storage), install yt-dlp/script dependancies [(wiki)](https://github.com/yt-dlp/yt-dlp/wiki/Installation#android) by copy/pasting the contents below into termux and pressing enter. **Termux does not use shebangs, more info [here](https://wiki.termux.com/wiki/Differences_from_Linux)**  
 ```
 termux-setup-storage
 pkg update && pkg upgrade
 pkg install libexpat openssl python termux-api nano ffmpeg
 pip install -U "yt-dlp[default]"
 ```
-3. Now that you're set up copy and paste the contents below into termux and press enter.
-```
-mkdir bin && cd bin && wget https://raw.githubusercontent.com/FalsePhilosopher/YT-DLP_CS/main/termux-url-opener
-```
-That's it, you can now share a video URL from your web browser, clipious, libretube, or youtube app and select termux for it to auto rip the video.
-
-**Manual Install**  
-3. create the bin dir/termux-url-opener and open termux-url-opener for editing
+4. create the bin dir/termux-url-opener and open termux-url-opener for editing
 ```
 mkdir bin && cd bin && touch termux-url-opener && nano termux-url-opener
 ```
-4. Copy+paste the contents below and exit (`CTRL+x, Press Y, ENTER` to save and exit.)  
-**Termux does not use shebangs, more info [here](https://wiki.termux.com/wiki/Differences_from_Linux)**  
+5. Copy+paste the contents below and exit (`CTRL+x, Press Y, ENTER` to save and exit.)  
 ```
 url=$1
 cd /sdcard/Movies/
@@ -107,13 +113,13 @@ cd /sdcard/Movies/
 
 You can now share a video URL from your web browser, clipious, libretube, or youtube app and select termux for it to auto rip the video.  
 ## Optional Steps
-5. Install OpenCL to enable HWaccel if using the `--sponsorblock-remove` option on Qualcomm SoC's.
+6. Install OpenCL to enable HWaccel if using the `--sponsorblock-remove` option on Qualcomm SoC's.
 ```
 pkg install opencl-vendor-driver opencl-headers ocl-icd clinfo
 ```
-6. Run `clinfo` to confirm OpenCL works.
-7. Install aria2c for faster downloads `pkg install aria2c`
-8. For more expanded termux-url-opener options follow [LordH3lmchen's gist](https://gist.github.com/LordH3lmchen/dc35e8df3dc41d126683f18fe44ebe17)
+7. Run `clinfo` to confirm OpenCL works.
+8. Install aria2c for faster downloads `pkg install aria2c`
+9. For more expanded termux-url-opener options follow [LordH3lmchen's gist](https://gist.github.com/LordH3lmchen/dc35e8df3dc41d126683f18fe44ebe17) or [qwerty12's gist](https://gist.github.com/qwerty12/e236f9c05bfdccffca35338383bdc02e)
 
 ---
 
