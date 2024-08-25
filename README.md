@@ -9,7 +9,7 @@ yt-dlp --sponsorblock-remove default --sub-langs 'en' --write-auto-sub --embed-m
 ### Video+Audio streams merged
 The most commonly run command, the one you probably want.
 ```
-yt-dlp --sponsorblock-remove default --sub-langs 'en' --write-auto-sub --embed-metadata --embed-subs --force-keyframes-at-cuts -f 'bv[height<=720][fps<=30]+ba/b[height<=720][fps<=30]' --merge-output-format mp4 -o '%(title)s.%(ext)s' -a urls.txt
+yt-dlp --sponsorblock-remove default --sub-langs 'en' --write-auto-sub --embed-metadata --embed-subs --force-keyframes-at-cuts -f 'bv[height<=720][fps<=30]+ba[ext=m4a]/b[height<=720][fps<=30]' --merge-output-format mp4 -o '%(title)s.%(ext)s' -a urls.txt
 ```
 ## Stream to Video Player
 Streams the video to VLC or MPV
@@ -91,7 +91,7 @@ mkdir bin && cd bin && touch termux-url-opener && nano termux-url-opener
 ```
 url=$1
 cd /sdcard/Movies/
-&& yt-dlp $1 -f 'bv[height<=720][fps<=30]+ba/b[height<=720][fps<=30]' --merge-output-format mp4 -o %(title)s.%(ext)s --exec after_move:'termux-vibrate & termux-tts-speak "video is done" & termux-toast -g top "Video is Done!"
+&& yt-dlp $1 -f 'bv[height<=720][fps<=30]+ba[ext=m4a]/b[height<=720][fps<=30]' --merge-output-format mp4 -o %(title)s.%(ext)s --exec after_move:'termux-vibrate & termux-tts-speak "video is done" & termux-toast -g top "Video is Done!"
 ```
 
 ---
@@ -100,13 +100,13 @@ cd /sdcard/Movies/
 ```
 url=$1
 cd /sdcard/Movies/
-&& yt-dlp $1 -f 'bv[height<=720][fps<=30]+ba/b[height<=720][fps<=30]' --merge-output-format mp4 --sponsorblock-remove default --force-keyframes-at-cuts --ppa "ModifyChapters+ffmpeg_i:-hwaccel opencl -hwaccel_output_format opencl" --ppa "ModifyChapters+ffmpeg_o:-c:v hevc_mediacodec -level 6.2" -o %(title)s.%(ext)s --exec after_move:'termux-vibrate & termux-tts-speak "video is done" & termux-toast -g top "Video is Done!"
+&& yt-dlp $1 -f 'bv[height<=720][fps<=30]+ba[ext=m4a]/b[height<=720][fps<=30]' --merge-output-format mp4 --sponsorblock-remove default --force-keyframes-at-cuts --ppa "ModifyChapters+ffmpeg_i:-hwaccel opencl -hwaccel_output_format opencl" --ppa "ModifyChapters+ffmpeg_o:-c:v hevc_mediacodec -level 6.2" -o %(title)s.%(ext)s --exec after_move:'termux-vibrate & termux-tts-speak "video is done" & termux-toast -g top "Video is Done!"
 ```
 **HWaccel/Aria2c Version** *Make sure you follow the optional step for this to work.*
 ```
 url=$1
 cd /sdcard/Movies/
-&& yt-dlp url=$1 -f 'bv[height<=720][fps<=30]+ba/b[height<=720][fps<=30]' --merge-output-format mp4 --downloader aria2c --sponsorblock-remove default --force-keyframes-at-cuts --ppa "ModifyChapters+ffmpeg_i:-hwaccel opencl -hwaccel_output_format opencl" --ppa "ModifyChapters+ffmpeg_o:-c:v hevc_mediacodec -level 6.2" -o %(title)s.%(ext)s --exec after_move:'termux-vibrate & termux-tts-speak "video is done" & termux-toast -g top "Video is Done!"
+&& yt-dlp url=$1 -f 'bv[height<=720][fps<=30]+ba[ext=m4a]/b[height<=720][fps<=30]' --merge-output-format mp4 --downloader aria2c --sponsorblock-remove default --force-keyframes-at-cuts --ppa "ModifyChapters+ffmpeg_i:-hwaccel opencl -hwaccel_output_format opencl" --ppa "ModifyChapters+ffmpeg_o:-c:v hevc_mediacodec -level 6.2" -o %(title)s.%(ext)s --exec after_move:'termux-vibrate & termux-tts-speak "video is done" & termux-toast -g top "Video is Done!"
 ```
 
 ---
@@ -132,6 +132,7 @@ You will get faster download speeds using aria2c instead of the default `--downl
 yt-dlp doesn't need the full youtube URL, if it's `https://www.youtube.com/watch?v=EXAMPLE` you can pull it with `yt-dlp EXAMPLE`  
 Proof of origin token info can be found [here](https://github.com/yt-dlp/yt-dlp/pull/10648) and [here](https://github.com/yt-dlp/yt-dlp-wiki/pull/40/files).  
 Changing your TTL to 65 might help with ripping on a mobile data connection ;) [Linux info here](https://askubuntu.com/questions/667096/how-to-change-the-default-ttl-of-tcp-ip-packets) [Windows info here](https://gist.github.com/farneser/3acdc050b59235e95c96802747b02113#file-windows-change-ttl-md)
+VLC does not support casting OPUS audio, for best compatability for casting use use AAC `ba[ext=m4a]`
 
 ## RTFM  
 https://man.archlinux.org/man/extra/yt-dlp/yt-dlp.1.en  
