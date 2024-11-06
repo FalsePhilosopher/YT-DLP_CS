@@ -43,8 +43,12 @@ cd /tmp && wget https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp
 
 ---
 
-## SCP to NAS after encode
-Create a bash script named `scp.sh` containing  
+## Rsync or SCP to NAS after encode
+Install/setup rsync on both machines and add to your command
+```
+--exec after_move:'rsync -rP --remove-source-files %(filepath,_filename|)q USER@IP:/Sample/Path/'
+```
+Or for a manual scripting method create a bash script named `scp.sh` containing  
 ```
 password="your password"
 username="username"
@@ -55,7 +59,6 @@ and add to your command
 ```
 --exec after_move:'/SAMPLE-PATH/scp.sh && rm %(filepath,_filename|)q'
 ```
-
 ---
 
 ## Termux yt-dlp Shortcut
