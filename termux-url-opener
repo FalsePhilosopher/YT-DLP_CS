@@ -1,3 +1,2 @@
 url=$1
-cd /sdcard/Movies/
-&& yt-dlp $1 -f 'bv[height<=720][fps<=30]+ba/b[height<=720][fps<=30]' --merge-output-format mp4 -o %(title)s.%(ext)s --exec after_move:'termux-vibrate & termux-tts-speak "video is done" & termux-toast -g top "Video is Done!"
+echo $1 > /sdcard/Movies/YT/urls.txt && cd /sdcard/Movies/YT && bash ./yt-dlp
